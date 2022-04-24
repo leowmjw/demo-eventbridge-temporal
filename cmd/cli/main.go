@@ -11,4 +11,8 @@ func main() {
 
 	fmt.Println("STATUS: ", user.INACTIVE)
 
+	u := user.UserSvc{}
+	fmt.Println(u.ID)
+	//userwf.UserWorkflow(con)
+
 }

@@ -12,11 +12,12 @@ func _() {
 	_ = x[ACTIVE_US-1]
 	_ = x[INACTIVE_US-2]
 	_ = x[SUSPENDED_US-3]
+	_ = x[VERIFIED_US-4]
 }
 
-const _UserStatus_name = "UNKNOWN_USACTIVE_USINACTIVE_USSUSPENDED_US"
+const _UserStatus_name = "UNKNOWN_USACTIVE_USINACTIVE_USSUSPENDED_USVERIFIED_US"
 
-var _UserStatus_index = [...]uint8{0, 10, 19, 30, 42}
+var _UserStatus_index = [...]uint8{0, 10, 19, 30, 42, 53}
 
 func (i UserStatus) String() string {
 	if i < 0 || i >= UserStatus(len(_UserStatus_index)-1) {

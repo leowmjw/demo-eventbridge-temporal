@@ -19,6 +19,9 @@ type MembershipReq struct {
 
 // AnonUserWorkflow - workflow for those tracked via session only; goes away after 1 day
 func AnonUserWorkflow(ctx workflow.Context, req SessionReq) error {
+	// Check email; check phone?
+	// fraud check if behavior for existing and now extra info does not match
+	// then on-boarded ..
 	return nil
 }
 
@@ -26,7 +29,7 @@ func AnonUserWorkflow(ctx workflow.Context, req SessionReq) error {
 func UserWorkflow(ctx workflow.Context, ur UserReq) error {
 
 	// Sign up
-	// from anonymous to user with identity .
+	// from anonymous to user with identity; KYC .
 	// now gets removed from the system ..
 	// suspended from system ..
 

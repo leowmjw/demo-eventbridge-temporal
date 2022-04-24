@@ -41,6 +41,7 @@ const (
 	ACTIVE_US
 	INACTIVE_US
 	SUSPENDED_US
+	VERIFIED_US
 )
 
 // Have heavy weight stuff like Temporal client one per package? svc ..
@@ -48,14 +49,15 @@ var temporalClient client.Client
 var mockTemporalClient mocks.Client
 
 type AnonUser struct {
-	ID         string
+	ID         string // prefix: whs_
 	SessionID  string
 	LastIP     net.Addr
 	LastActive time.Time
 }
 
 type User struct {
-	ID      string
+	ID      string // prefix: whu_
+	PID     string // prefix: whp_  -- link to PII
 	AnonIDs []AnonUser
 	Status  UserStatus
 }
@@ -72,7 +74,7 @@ type Profile struct {
 }
 
 type LinkedAccounts struct {
-	BankRef string
+	BankRef string // prefix: whb_
 }
 
 type UserSvc struct {
@@ -80,6 +82,7 @@ type UserSvc struct {
 	// HTTP REST endpoint; better elsewhere?
 	// Internal User struct ..
 	User
+	TemporalClient client.Client
 }
 
 type MembershipSvc struct {

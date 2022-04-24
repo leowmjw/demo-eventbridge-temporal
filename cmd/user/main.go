@@ -1,9 +1,11 @@
 package main
 
 import (
+	usersvc "app/internal/user"
 	"app/workflow/user"
 	"context"
 	"fmt"
+	"github.com/davecgh/go-spew/spew"
 	"go.temporal.io/sdk/worker"
 
 	"go.temporal.io/sdk/client"
@@ -25,14 +27,18 @@ func main() {
 	}
 	defer c.Close()
 
-	m := user.MembershipSvc{}
+	u := usersvc.UserSvc{}
+	u.OnBoardFromAnonymous()
+
+	m := usersvc.MembershipSvc{}
+	spew.Dump(m)
 	// Start the workflow ..
 	go func() {
 		wf, exerr := c.ExecuteWorkflow(context.Background(),
 			client.StartWorkflowOptions{
 				ID:        wfid,
 				TaskQueue: q,
-			}, m.MembershipWorkflow,
+			}, user.MembershipWorkflow,
 			user.MembershipReq{})
 		if exerr != nil {
 			panic(exerr)
@@ -45,7 +51,7 @@ func main() {
 
 	// Start the worker ..
 	w := worker.New(c, q, worker.Options{})
-	w.RegisterWorkflow(m.MembershipWorkflow)
+	w.RegisterWorkflow(user.MembershipWorkflow)
 	w.Run(worker.InterruptCh())
 	// Below is an incomplete simplified version of Run
 	//w.Start()

@@ -1,6 +1,8 @@
 package user
 
 import (
+	"go.temporal.io/sdk/client"
+	"go.temporal.io/sdk/mocks"
 	"net"
 	"time"
 )
@@ -41,6 +43,10 @@ const (
 	SUSPENDED_US
 )
 
+// Have heavy weight stuff like Temporal client one per package? svc ..
+var temporalClient client.Client
+var mockTemporalClient mocks.Client
+
 type AnonUser struct {
 	ID         string
 	SessionID  string
@@ -74,4 +80,24 @@ type UserSvc struct {
 	// HTTP REST endpoint; better elsewhere?
 	// Internal User struct ..
 	User
+}
+
+type MembershipSvc struct {
+	// stuff here like ..?
+}
+
+// OnBoardFromAnonymous allows extraction from JWTs to full user info; tie to identity
+func (u UserSvc) OnBoardFromAnonymous() error {
+	// finish off the lifecycle of existing anon session (if not already expired) ..
+	return nil
+}
+
+func (u UserSvc) UpdateUser() error {
+	// add if non-existent via kicking off Lifecycle of User
+	return nil
+}
+
+func (u UserSvc) UpdateProfile() error {
+	// add if non existent
+	return nil
 }

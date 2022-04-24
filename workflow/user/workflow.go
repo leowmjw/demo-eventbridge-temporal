@@ -5,16 +5,21 @@ import (
 	"go.temporal.io/sdk/workflow"
 )
 
+type SessionReq struct {
+	Action int
+}
+
 type UserReq struct {
 	Action int
 }
 
-type MembershipSvc struct {
-	// stuff here like ..?
-}
-
 type MembershipReq struct {
 	Action int
+}
+
+// AnonUserWorkflow - workflow for those tracked via session only; goes away after 1 day
+func AnonUserWorkflow(ctx workflow.Context, req SessionReq) error {
+	return nil
 }
 
 // UserWorkflow - workflow for user whole lifecycle
@@ -29,7 +34,7 @@ func UserWorkflow(ctx workflow.Context, ur UserReq) error {
 }
 
 // MembershipWorkflow - Workflow ...
-func (m *MembershipSvc) MembershipWorkflow(ctx workflow.Context, mr MembershipReq) error {
+func MembershipWorkflow(ctx workflow.Context, mr MembershipReq) error {
 	fmt.Println("Hellow!!!")
 	// On-Board free
 	// On-Board direct to Paid ..
@@ -40,6 +45,6 @@ func (m *MembershipSvc) MembershipWorkflow(ctx workflow.Context, mr MembershipRe
 	return nil
 }
 
-func (m *MembershipSvc) privateFund() {
+func privateFund() {
 
 }
